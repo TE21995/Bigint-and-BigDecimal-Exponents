@@ -8,13 +8,10 @@ public class Main {
 
      Expo test = new Expo();
 
-        BigInteger prin = test.factorer(2,42);
+     BigInteger first = BigInteger.valueOf(2);
+     BigInteger second = BigInteger.valueOf(64);
 
-        System.out.println(prin.toString());
-
-        System.out.println(test.exponenter(2, 42));
-
-        System.out.println(test.exponenter(2, -42));
+        System.out.println(test.power(first, second));
 
 	// write your code here
     }

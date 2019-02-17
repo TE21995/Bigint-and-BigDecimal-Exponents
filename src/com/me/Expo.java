@@ -7,47 +7,30 @@ import static java.lang.Math.pow;
 
 public class Expo{
 
-    private int count;
-    private long countRest;
-    private long restValue = 1;
+    private BigInteger base = BigInteger.valueOf(pot(2, 30));
+    private int b = base.intValue();
 
-    public BigInteger factorer(long num, int exponent){
+    public BigInteger power(BigInteger num, BigInteger exponent){ // method that uses the BigInteger pow method
 
-        if(num <10){ // code for powers of 2, breaking the calculation to make it more efficient
+        int compareV = exponent.compareTo(base);
 
-        if(exponent < 32){ return BigInteger.valueOf(pot(num, exponent)); }
-
-
-        count = exponent / 31;
-        countRest = exponent % 31;
-
-        BigInteger base = BigInteger.valueOf(pot(num, 31));
-
-        BigInteger result = base.pow(count);
-
-        if(countRest != 0){
-            restValue = pot(num, countRest);
+        if(compareV <= 0){
+            int exp = exponent.intValue();
+            return num.pow(exp);
         }
 
-        BigInteger rest = BigInteger.valueOf(restValue);
+        BigInteger count = exponent.divide(base);
 
-        BigInteger finalResult = result.multiply(rest);
+        BigInteger result1 = num.pow(b);
 
-        return finalResult;
-
-        }
-
-        BigInteger res2 = BigInteger.valueOf(num);
-        BigInteger result2 = res2.pow(exponent);
-
-        return result2;
+        return power(result1, count);
 
     }
 
 
     public BigDecimal exponenter(int num, int exponent){ // BigDecimal to return power of negative exponents
 
-        BigDecimal d = BigDecimal.valueOf(1); // to calculate negative exponents
+        BigDecimal d = BigDecimal.ONE; // to calculate negative exponents
         BigDecimal nu = BigDecimal.valueOf(num); // to use the BigDecimal pow function
 
         if(exponent < 0){ // power of negative exponents is equal to 1 divided by the respective positive power
@@ -67,11 +50,19 @@ public class Expo{
     }
 
 
-    public long pot(long num, long exponent){ //recursive function to calculate positive powers
+    public long pot(long num, long exponent){ //recursive method to calculate positive powers
 
         if(exponent <= 0) return 1;
 
-        return num * pot(num, exponent -1);// recursive call to the function, equivalent to n * n-1 * n-2 ...
+        return num * pot(num, exponent -1);// recursive call to the method, equivalent to n * n-1 * n-2 ...
+
+    }
+
+    public BigInteger pot(BigInteger num, BigInteger exponent){ //recursive method to calculate positive powers og BigIntegers
+
+        if(exponent.compareTo(BigInteger.ZERO) <=  0) return BigInteger.ONE;
+
+        return num.multiply(pot(num, exponent.subtract(BigInteger.ONE)));// recursive call to the method, equivalent to n * n-1 * n-2 ...
 
     }
 
